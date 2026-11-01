@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{% if LANGUAGE_CODE == "fa" %}درباره ما{% else %}About us{% endif %} | TTA GROUP{% endblock %}
+{% block content %}
+    <section class="page-header">
+        <div class="container">
+            <p class="eyebrow">{% if LANGUAGE_CODE == "fa" %}شماره ثبت: {{ company.registration_fa }} | تأسیس {{ company.established_fa }}{% else %}Reg No: {{ company.registration }} | Established {{ company.established_en }}{% endif %}</p>
+            <h1>{% if LANGUAGE_CODE == "fa" %}{{ company.name_fa }}{% else %}{{ company.name_en }}{% endif %}</h1>
+            <p>{% if LANGUAGE_CODE == "fa" %}بیش از ۲ دهه سابقه مستمر در عایق‌کاری صنعتی، اجرای سردخانه‌های بزرگ و بازرگانی بین‌المللی محصولات پتروشیمی{% else %}Over two decades in industrial insulation, cold storage construction, and international petrochemical trading{% endif %}</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container split company-intro">
+            <div>
+                <h2>{% if LANGUAGE_CODE == "fa" %}پیشگام در بهینه‌سازی انرژی و صادرات پتروشیمی{% else %}Energy Optimization & Petrochemical Exports{% endif %}</h2>
+                <p class="reading">{% if LANGUAGE_CODE == "fa" %}{{ company.history_fa }}{% else %}{{ company.history_en }}{% endif %}</p>
+                <p class="reading">{% if LANGUAGE_CODE == "fa" %}{{ company.brand_history_fa }}{% else %}{{ company.brand_history_en }}{% endif %}</p>
+            </div>
+            <aside class="company-panel">
+                <h2>{% if LANGUAGE_CODE == "fa" %}تجهیزات و برندهای همکار{% else %}Machinery & Supply Partners{% endif %}</h2>
+                <h3>{% if LANGUAGE_CODE == "fa" %}تجهیزات{% else %}Machinery{% endif %}</h3><p dir="ltr">{{ company.machinery }}</p>
+                <h3>{% if LANGUAGE_CODE == "fa" %}مواد اولیه{% else %}Raw materials{% endif %}</h3><p dir="ltr">{{ company.materials }}</p>
+                <h3>{% if LANGUAGE_CODE == "fa" %}پتروشیمی‌های داخلی{% else %}Local petrochemicals{% endif %}</h3><p dir="ltr">{{ company.petrochemicals }}</p>
+            </aside>
+        </div>
+    </section>
+    {% include "components/company_services.html" %}
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>{% if LANGUAGE_CODE == "fa" %}جدول فنی مقایسه عایق‌های حرارتی و برودتی{% else %}Thermal & Cryogenic Insulation Comparison{% endif %}</h2></div>
+            {% include "components/insulations.html" %}
+        </div>
+    </section>
+    {% include "components/company_advantages.html" %}
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>{% if LANGUAGE_CODE == "fa" %}پروژه‌ها{% else %}Project references{% endif %}</h2>
+            </div>
+            <div class="product-grid">
+                {% for project in projects %}
+                    <article class="project-card">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}"
+                                 alt="{{ project.title }}"
+                                 width="480"
+                                 height="320"
+                                 loading="lazy">
+                        {% endif %}
+                        <p class="eyebrow">{{ project.category_label }}</p>
+                        <h3>{{ project.title }}</h3>
+                    </article>
+                {% empty %}
+                    <p class="muted">
+                        {% if LANGUAGE_CODE == "fa" %}هنوز پروژه‌ای منتشر نشده است.{% else %}No project references have been published yet.{% endif %}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% include "components/cta.html" %}
+{% endblock %}

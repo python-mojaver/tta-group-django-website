@@ -1,0 +1,21 @@
+{% load static %}
+<section class="section section-tinted">
+    <div class="container">
+        <div class="company-advantages">
+            <h2>{% if LANGUAGE_CODE == "fa" %}مزایای رقابتی TTA GROUP{% else %}Why Partner With TTA GROUP?{% endif %}</h2>
+            <div class="advantages-grid">
+                {% for advantage in company_advantages %}
+                    <article>
+                        <svg class="company-icon" aria-hidden="true" focusable="false">
+                            <use href="{% static 'images/icons.svg' %}#{{ advantage.icon }}"></use>
+                        </svg>
+                        <div>
+                            <h3>{% if LANGUAGE_CODE == "fa" %}{{ advantage.title_fa }}{% else %}{{ advantage.title_en }}{% endif %}</h3>
+                            <p>{% if LANGUAGE_CODE == "fa" %}{{ advantage.description_fa }}{% else %}{{ advantage.description_en }}{% endif %}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

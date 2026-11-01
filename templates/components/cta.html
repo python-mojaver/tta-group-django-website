@@ -1,0 +1,14 @@
+<section class="cta">
+    <div class="container cta-inner">
+        <div>
+            <p class="eyebrow light">
+                {% if LANGUAGE_CODE == "fa" %}قدم بعدی{% else %}YOUR NEXT STEP{% endif %}
+            </p>
+            <h2>
+                {% if LANGUAGE_CODE == "fa" %}برای پروژه بعدی‌تان صحبت کنیم.{% else %}Let’s talk about what’s next.{% endif %}
+            </h2>
+        </div>
+        <a class="button"
+           href="{% url 'contact' %}">{% if LANGUAGE_CODE == "fa" %}شروع گفتگو{% else %}Start a conversation{% endif %} ↗</a>
+    </div>
+</section>

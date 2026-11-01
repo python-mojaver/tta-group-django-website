@@ -1,0 +1,18 @@
+<article class="product-card">
+    <a class="product-art"
+       href="{{ product.get_absolute_url }}"
+       tabindex="-1"
+       aria-hidden="true">
+        <img src="{{ product.image_url }}" alt="" width="480" height="300" loading="lazy">
+        <span class="grade" dir="ltr">{{ product.grade }}</span>
+    </a>
+    <div class="product-body">
+        <p class="eyebrow">{{ product.category.name }}</p>
+        <h3>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        </h3>
+        <p class="muted">{{ product.description|truncatewords:20 }}</p>
+        <a class="text-link" href="{{ product.get_absolute_url }}">{% if LANGUAGE_CODE == "fa" %}مشخصات و جزئیات{% else %}Explore material{% endif %} <span aria-hidden="true">↗</span>
+        </a>
+    </div>
+</article>

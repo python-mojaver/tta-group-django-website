@@ -1,0 +1,103 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}"
+      dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% else %}ltr{% endif %}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>
+            {% block title %}
+                TTA GROUP — {% if LANGUAGE_CODE == "fa" %}مهندسی تأمین، از محصول تا پروژه{% else %}Materials for what comes next{% endif %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="{% block description %}{% if LANGUAGE_CODE == 'fa' %}تأمین و بازرگانی محصولات پتروشیمی و عایق‌های صنعتی؛ کاتالوگ و درخواست قیمت.{% else %}Petrochemical and industrial insulation catalog, technical information and quote requests.{% endif %}{% endblock %}">
+        <link rel="canonical" href="{{ canonical_url }}">
+        <link rel="alternate" hreflang="fa" href="{{ alternate_fa }}">
+        <link rel="alternate" hreflang="en" href="{{ alternate_en }}">
+        <link rel="icon"
+              href="{% static 'images/logo.png' %}?v=tta-content-20261101"
+              type="image/png">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}?v=tta-content-20261101">
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        <a class="skip"
+           href="#main">{% if LANGUAGE_CODE == "fa" %}رفتن به محتوا{% else %}Skip to content{% endif %}</a>
+        <header class="header">
+            <div class="container header-inner">
+                <a class="brand tta-brand" href="{% url 'home' %}" aria-label="TTA Group">
+                    <img width="60"
+                         height="60"
+                         src="{% static 'images/logo.png' %}?v=tta-content-20261101"
+                         alt="TTA Group Logo">
+                    <span>{% if LANGUAGE_CODE == "fa" %}تتا عایق{% else %}TTA GROUP{% endif %}<small>{% if LANGUAGE_CODE == "fa" %}تهران تیر آبان عایق{% else %}Tehran Tir Aban Ayegh{% endif %}</small>
+                    </span>
+                </a>
+                <button class="menu-button"
+                        aria-controls="navigation"
+                        aria-expanded="false"
+                        type="button">{% if LANGUAGE_CODE == "fa" %}منو{% else %}Menu{% endif %} ☰</button>
+                <nav id="navigation"
+                     class="nav"
+                     aria-label="{% if LANGUAGE_CODE == 'fa' %}منوی اصلی{% else %}Main navigation{% endif %}">
+                    <a href="{% url 'home' %}"
+                       {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>{% if LANGUAGE_CODE == "fa" %}خانه{% else %}Home{% endif %}</a>
+                    <a href="{% url 'products_list' %}"
+                       {% if request.resolver_match.url_name == 'products_list' or request.resolver_match.url_name == 'product_detail' %}aria-current="page"{% endif %}>{% if LANGUAGE_CODE == "fa" %}محصولات{% else %}Products{% endif %}</a>
+                    <a href="{% url 'about' %}#trading">{% if LANGUAGE_CODE == "fa" %}واحد بازرگانی{% else %}Commercial unit{% endif %}</a>
+                    <a href="{% url 'about' %}"
+                       {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>{% if LANGUAGE_CODE == "fa" %}درباره ما{% else %}About{% endif %}</a>
+                    <a href="{% url 'contact' %}"
+                       {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>{% if LANGUAGE_CODE == "fa" %}ارتباط با ما{% else %}Contact{% endif %}</a>
+                </nav>
+                {# Preserve the current route and filters when changing language. #}
+                <form class="language-form" action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <input type="hidden"
+                           name="language"
+                           value="{% if LANGUAGE_CODE == 'fa' %}en{% else %}fa{% endif %}">
+                    <button type="submit"
+                            class="language-button"
+                            aria-label="{% if LANGUAGE_CODE == 'fa' %}Switch to English{% else %}تغییر زبان به فارسی{% endif %}">{% if LANGUAGE_CODE == "fa" %}EN{% else %}فا{% endif %} ↗</button>
+                </form>
+                <a href="{% url 'contact' %}" class="button button-small header-quote">{% if LANGUAGE_CODE == "fa" %}درخواست قیمت{% else %}Request a quote{% endif %}</a>
+            </div>
+        </header>
+        <main id="main" tabindex="-1">
+            {% if messages %}
+                <div class="container messages" role="status">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="footer" id="contact">
+            <div class="container footer-top">
+                <div>
+                    <h2 class="footer-brand" dir="ltr">TTA GROUP CO</h2>
+                    <p>{% if LANGUAGE_CODE == "fa" %}{{ company.summary_fa }}{% else %}{{ company.summary_en }}{% endif %}</p>
+                </div>
+                <div>
+                    <h2>{% if LANGUAGE_CODE == "fa" %}دسترسی سریع{% else %}Quick Links{% endif %}</h2>
+                    <a href="{% url 'home' %}">{% if LANGUAGE_CODE == "fa" %}صفحه اصلی{% else %}Home{% endif %}</a>
+                    <a href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}کاتالوگ محصولات{% else %}Product catalog{% endif %}</a>
+                    <a href="{% url 'about' %}">{% if LANGUAGE_CODE == "fa" %}درباره ما و سوابق{% else %}About us{% endif %}</a>
+                    <a href="{% url 'contact' %}">{% if LANGUAGE_CODE == "fa" %}ثبت درخواست قیمت{% else %}Request a quote{% endif %}</a>
+                </div>
+                <div>
+                    <h2>{% if LANGUAGE_CODE == "fa" %}اطلاعات تماس رسمی{% else %}Official Contact Information{% endif %}</h2>
+                    {% include "components/contact_details.html" %}
+                </div>
+            </div>
+            <div class="container footer-bottom">
+                <span>© {% now "Y" %} {% if LANGUAGE_CODE == "fa" %}کلیه حقوق برای شرکت تهران تیر آبان عایق (TTA Group) محفوظ است.{% else %}All rights reserved for TTA Group Co.{% endif %}</span>
+                <span class="registration-badge">{% if LANGUAGE_CODE == "fa" %}شماره ثبت: {{ company.registration_fa }}{% else %}Reg No: {{ company.registration }}{% endif %}</span>
+            </div>
+        </footer>
+        <script src="{% static 'js/site.js' %}" defer></script>
+    </body>
+</html>

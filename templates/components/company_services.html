@@ -1,0 +1,20 @@
+{% load static %}
+<section class="section section-tinted" id="trading">
+    <div class="container">
+        <div class="section-heading company-heading">
+            <h2>{% if LANGUAGE_CODE == "fa" %}خدمات و حوزه‌های اصلی فعالیت{% else %}Our Core Services & Expertise{% endif %}</h2>
+            <p class="muted">{% if LANGUAGE_CODE == "fa" %}ارائه راهکارهای جامع بازرگانی و مهندسی عایق‌کاری{% else %}Comprehensive trading and engineering insulation solutions{% endif %}</p>
+        </div>
+        <div class="company-services">
+            {% for service in company_services %}
+                <article class="company-service">
+                    <svg class="company-icon" aria-hidden="true" focusable="false">
+                        <use href="{% static 'images/icons.svg' %}#{{ service.icon }}"></use>
+                    </svg>
+                    <h3>{% if LANGUAGE_CODE == "fa" %}{{ service.title_fa }}{% else %}{{ service.title_en }}{% endif %}</h3>
+                    <p>{% if LANGUAGE_CODE == "fa" %}{{ service.description_fa }}{% else %}{{ service.description_en }}{% endif %}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

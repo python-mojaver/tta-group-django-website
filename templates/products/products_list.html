@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if LANGUAGE_CODE == "fa" %}کاتالوگ محصولات{% else %}Product catalog{% endif %} | TTA GROUP
+{% endblock %}
+{% block extra_head %}
+
+    {% if query or selected_category %}
+        <meta name="robots" content="noindex,follow">
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <section class="page-header">
+        <div class="container">
+            <p class="eyebrow">
+                {% if LANGUAGE_CODE == "fa" %}کاتالوگ مواد صنعتی{% else %}THE MATERIALS CATALOG{% endif %}
+            </p>
+            <h1>
+                {% if LANGUAGE_CODE == "fa" %}محصول مناسب را پیدا کنید.{% else %}Find your next material.{% endif %}
+            </h1>
+            <p>
+                {% if LANGUAGE_CODE == "fa" %}جست‌وجو بر اساس نام، گرید یا کاربرد؛ مقایسه و بررسی جزئیات.{% else %}Search by name, grade or application. Explore the details.{% endif %}
+            </p>
+        </div>
+    </section>
+    <section class="section catalog-section">
+        <div class="container">
+            <form class="filter-bar" method="get" role="search">
+                <div class="filter-search">
+                    <label for="q">{% if LANGUAGE_CODE == "fa" %}جست‌وجو{% else %}Search materials{% endif %}</label>
+                    <input id="q"
+                           name="q"
+                           value="{{ query }}"
+                           maxlength="100"
+                           placeholder="{% if LANGUAGE_CODE == 'fa' %}مثلاً پلی‌اتیلن یا HDPE{% else %}e.g. polyethylene or HDPE{% endif %}">
+                </div>
+                <div>
+                    <label for="category">{% if LANGUAGE_CODE == "fa" %}دسته‌بندی{% else %}Category{% endif %}</label>
+                    <select id="category" name="category">
+                        <option value="">{% if LANGUAGE_CODE == "fa" %}همه دسته‌ها{% else %}All categories{% endif %}</option>
+                        {% for category in categories %}
+                            <option value="{{ category.pk }}"
+                                    {% if selected_category == category.pk|stringformat:'s' %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="sort">{% if LANGUAGE_CODE == "fa" %}مرتب‌سازی{% else %}Sort by{% endif %}</label>
+                    <select id="sort" name="sort">
+                        <option value="newest" {% if sort == 'newest' %}selected{% endif %}>{% if LANGUAGE_CODE == "fa" %}جدیدترین{% else %}Newest{% endif %}</option>
+                        <option value="name" {% if sort == 'name' %}selected{% endif %}>{% if LANGUAGE_CODE == "fa" %}نام محصول{% else %}Product name{% endif %}</option>
+                    </select>
+                </div>
+                <button class="button"
+                        type="submit">{% if LANGUAGE_CODE == "fa" %}جست‌وجو{% else %}Search{% endif %}</button>
+            </form>
+            <div class="results-meta">
+                <span>{{ page_obj.paginator.count }} {% if LANGUAGE_CODE == "fa" %}محصول{% else %}materials{% endif %}</span>
+                {% if query or selected_category %}
+                    <a href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}حذف فیلترها{% else %}Clear filters{% endif %} ×</a>
+                {% endif %}
+            </div>
+            <div class="product-grid">
+                {% for product in products %}
+
+                    {% include "components/product_card.html" %}
+
+                {% empty %}
+                    <div class="empty-state">
+                        <h2>{% if LANGUAGE_CODE == "fa" %}محصولی پیدا نشد{% else %}No materials found{% endif %}</h2>
+                        <p>
+                            {% if LANGUAGE_CODE == "fa" %}عبارت دیگری جست‌وجو کنید یا فیلترها را حذف کنید.{% else %}Try another search or clear the filters.{% endif %}
+                        </p>
+                        <a class="text-link" href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}نمایش همه{% else %}View all materials{% endif %} ↗</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# filter_query contains the supported filters without the old page number. #}
+            {% if page_obj.paginator.num_pages > 1 %}
+                <nav class="pagination"
+                     aria-label="{% if LANGUAGE_CODE == 'fa' %}صفحه‌بندی{% else %}Pagination{% endif %}">
+                    {% if page_obj.has_previous %}
+                        <a href="?{{ filter_query }}&page={{ page_obj.previous_page_number }}">{% if LANGUAGE_CODE == "fa" %}قبلی{% else %}Previous{% endif %}</a>
+                    {% endif %}
+                    <span>{% if LANGUAGE_CODE == "fa" %}صفحه{% else %}Page{% endif %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a href="?{{ filter_query }}&page={{ page_obj.next_page_number }}">{% if LANGUAGE_CODE == "fa" %}بعدی{% else %}Next{% endif %}</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

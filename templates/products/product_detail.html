@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ product.name }} · {{ product.grade }} | TTA GROUP
+{% endblock %}
+{% block description %}
+    {{ product.description|truncatewords:30 }}
+{% endblock %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <nav class="breadcrumbs"
+                 aria-label="{% if LANGUAGE_CODE == 'fa' %}مسیر صفحه{% else %}Breadcrumb{% endif %}">
+                <a href="{% url 'home' %}">{% if LANGUAGE_CODE == "fa" %}خانه{% else %}Home{% endif %}</a>
+                <span>/</span>
+                <a href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}محصولات{% else %}Products{% endif %}</a>
+                <span>/</span>
+                <span>{{ product.name }}</span>
+            </nav>
+            <div class="detail-grid">
+                <div class="detail-art">
+                    <img src="{{ product.image_url }}"
+                         alt="{{ product.name }}"
+                         width="640"
+                         height="400">
+                    <span class="eyebrow">TTA GROUP / MATERIAL SERIES</span>
+                </div>
+                <div>
+                    <p class="eyebrow">{{ product.category.name }}</p>
+                    <h1>{{ product.name }}</h1>
+                    <span class="grade detail-grade" dir="ltr">{{ product.grade }}</span>
+                    <div class="description">{{ product.description|linebreaks }}</div>
+                    {% if product.applications %}
+                        <h2 class="h3">{% if LANGUAGE_CODE == "fa" %}کاربردها{% else %}Applications{% endif %}</h2>
+                        <p class="muted">{{ product.applications }}</p>
+                    {% endif %}
+                    <a class="button" href="{% url 'contact' %}?product={{ product.slug|urlencode }}">{% if LANGUAGE_CODE == "fa" %}درخواست قیمت این محصول{% else %}Request a quote{% endif %} ↗</a>
+                    <div class="document-links">
+                        <h2 class="h3">
+                            {% if LANGUAGE_CODE == "fa" %}مستندات فنی{% else %}Technical documents{% endif %}
+                        </h2>
+                        {# Optional uploads have no URL until a real file is attached. #}
+                        {% if product.tds_file %}
+                            <a class="text-link"
+                               href="{{ product.tds_file.url }}"
+                               target="_blank"
+                               rel="noopener noreferrer">TDS · PDF ↗</a>
+                        {% endif %}
+                        {% if product.msds_file %}
+                            <a class="text-link"
+                               href="{{ product.msds_file.url }}"
+                               target="_blank"
+                               rel="noopener noreferrer">MSDS · PDF ↗</a>
+                        {% endif %}
+                        {% if not product.tds_file and not product.msds_file %}
+                            <p class="muted">
+                                {% if LANGUAGE_CODE == "fa" %}هنوز سندی منتشر نشده است. در فرم درخواست، مشخصات مورد نیاز را بنویسید.{% else %}No documents have been published yet. Include your technical needs in the inquiry form.{% endif %}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if LANGUAGE_CODE == "fa" %}درخواست قیمت و تماس{% else %}Request a quote{% endif %} | TTA GROUP
+{% endblock %}
+{% block content %}
+    <section class="page-header">
+        <div class="container">
+            <p class="eyebrow">
+                {% if LANGUAGE_CODE == "fa" %}در ارتباط باشیم{% else %}LET’S CONNECT{% endif %}
+            </p>
+            <h1>
+                {% if LANGUAGE_CODE == "fa" %}پروژه شما از اینجا شروع می‌شود.{% else %}Your next project starts here.{% endif %}
+            </h1>
+            <p>
+                {% if LANGUAGE_CODE == "fa" %}نیازتان را بنویسید تا درخواست برای بررسی ثبت شود.{% else %}Tell us what you need. Your inquiry will be saved for review.{% endif %}
+            </p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container contact-grid">
+            <aside>
+                <h2>
+                    {% if LANGUAGE_CODE == "fa" %}جزئیات، تفاوت می‌سازند.{% else %}Details make the difference.{% endif %}
+                </h2>
+                <p class="muted">
+                    {% if LANGUAGE_CODE == "fa" %}نام ماده، گرید، مقدار تقریبی و کاربرد مورد نظر را ذکر کنید.{% else %}Include the material, grade, approximate quantity and intended application.{% endif %}
+                </p>
+                <div class="demo-notice">
+                    {% if LANGUAGE_CODE == "fa" %}این یک نمونه‌کار است. برای آزمایش فرم از اطلاعات ساختگی استفاده کنید؛ ایمیلی ارسال نمی‌شود.{% else %}This is a portfolio demo. Use fictional details to test the form. No email is sent.{% endif %}
+                </div>
+                <h3>{% if LANGUAGE_CODE == "fa" %}اطلاعات تماس رسمی{% else %}Official Contact Information{% endif %}</h3>
+                {% include "components/contact_details.html" %}
+            </aside>
+            <form method="post" class="inquiry-form">
+                {# Validation runs on the server; CSRF protects the submitted form. #}
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div role="alert" class="form-error">
+                        {% if LANGUAGE_CODE == "fa" %}لطفاً موارد مشخص‌شده را اصلاح کنید.{% else %}Please correct the highlighted fields.{% endif %}{{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                <div class="form-grid">
+                    {% for field in form %}
+
+                        {% if field.name != "website" %}
+                            <div class="form-field {% if field.name == 'message' %}full-width{% endif %}">
+                                <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}<span aria-hidden="true">*</span>{% endif %}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="field-error">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            {# Keep the bot trap out of keyboard and screen-reader navigation. #}
+                            <div class="honeypot" aria-hidden="true">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+                <p class="form-help">
+                    {% if LANGUAGE_CODE == "fa" %}شرح درخواست: بین ۲۰ تا ۳۰۰۰ نویسه. موارد ستاره‌دار الزامی‌اند.{% else %}Requirements: 20–3000 characters. Fields marked * are required.{% endif %}
+                </p>
+                <button class="button" type="submit">{% if LANGUAGE_CODE == "fa" %}ثبت درخواست{% else %}Submit inquiry{% endif %} ↗</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

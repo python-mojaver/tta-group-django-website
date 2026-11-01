@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <section class="hero" data-theme="tta-original">
+        <div class="container hero-inner">
+            <div class="hero-copy">
+                <p class="hero-badge">
+                    {% if LANGUAGE_CODE == "fa" %}شرکت مهندسی و بازرگانی تهران تیر آبان عایق (شماره ثبت: ۲۱۳۱۹۸){% else %}Tehran Tir Aban Ayegh Engineering & Trading Co. (Reg No: 213198){% endif %}
+                </p>
+                <h1>
+                    {% if LANGUAGE_CODE == "fa" %}تأمین بی‌واسطه و صادرات محصولات پتروشیمی و عایق‌های صنعتی{% else %}Direct Supply & Global Export of Petrochemicals & Industrial Insulation{% endif %}
+                </h1>
+                <p class="hero-description">
+                    {% if LANGUAGE_CODE == "fa" %}بیش از ۲۰ سال تجربه در حوزه عایق‌کاری صنعتی، سیستم‌های برودتی سردخانه، و تأمین کالا و کودهای شیمیایی برای بازارهای داخلی و صادراتی.{% else %}Over two decades of expertise in industrial insulation, cooling systems and international trading of fertilizers and polymers.{% endif %}
+                </p>
+                <div class="hero-actions">
+                    <a class="button" href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}مشاهده کاتالوگ محصولات{% else %}View Products Catalog{% endif %} ↗</a>
+                    <a class="button button-outline" href="{% url 'about' %}">{% if LANGUAGE_CODE == "fa" %}درباره ما و سوابق{% else %}About Our Company{% endif %}</a>
+                </div>
+            </div>
+            <aside class="hero-card">
+                <img width="86"
+                     height="86"
+                     src="{% static 'images/logo.png' %}?v=tta-content-20261101"
+                     alt="">
+                <h2>TTA GROUP CO</h2>
+                <p>
+                    {% if LANGUAGE_CODE == "fa" %}تأمین‌کننده فرآورده‌های پتروشیمی، کود اوره ۴۶٪، پلیمر ABS و عایق‌های صنعتی{% else %}Supplier of petrochemical products, Urea 46%, ABS polymer and industrial insulation.{% endif %}
+                </p>
+                <span class="registration">Reg No: 213198</span>
+            </aside>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container split company-intro">
+            <div>
+                <h2>{% if LANGUAGE_CODE == "fa" %}درباره {{ company.name_fa }}{% else %}About {{ company.name_en }}{% endif %}</h2>
+                <p class="reading">{% if LANGUAGE_CODE == "fa" %}{{ company.history_fa }}{% else %}{{ company.history_en }}{% endif %}</p>
+                <p class="reading">{% if LANGUAGE_CODE == "fa" %}{{ company.brand_history_fa }}{% else %}{{ company.brand_history_en }}{% endif %}</p>
+            </div>
+            <aside class="company-panel">
+                <h3>{% if LANGUAGE_CODE == "fa" %}تجهیزات و ماشین‌آلات{% else %}Advanced Machinery{% endif %}</h3>
+                <p dir="ltr">{{ company.machinery }}</p>
+                <a class="text-link" href="{% url 'about' %}">{% if LANGUAGE_CODE == "fa" %}درباره ما و سوابق{% else %}Company background{% endif %} ↗</a>
+            </aside>
+        </div>
+    </section>
+    {% include "components/company_services.html" %}
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>{% if LANGUAGE_CODE == "fa" %}محصولات پتروشیمی و مواد اولیه{% else %}Petrochemicals & Raw Materials{% endif %}</h2>
+                <a class="text-link" href="{% url 'products_list' %}">{% if LANGUAGE_CODE == "fa" %}همه محصولات و توضیحات{% else %}Browse the full catalog{% endif %} ↗</a>
+            </div>
+            <div class="product-grid">
+                {% for product in products %}
+                    {% include "components/product_card.html" %}
+                {% empty %}
+                    <p>{% if LANGUAGE_CODE == "fa" %}هنوز محصولی منتشر نشده است.{% else %}No products have been published yet.{% endif %}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="section section-tinted">
+        <div class="container">
+            <div class="section-heading company-heading">
+                <h2>{% if LANGUAGE_CODE == "fa" %}جدول فنی مقایسه عایق‌های حرارتی و برودتی{% else %}Thermal & Cryogenic Insulation Comparison{% endif %}</h2>
+                <p class="muted">{% if LANGUAGE_CODE == "fa" %}مقایسه ضریب هدایت حرارتی λ و ضخامت‌های متداول صنعتی{% else %}Thermal conductivity λ and typical industrial thicknesses{% endif %}</p>
+            </div>
+            {% include "components/insulations.html" %}
+        </div>
+    </section>
+    {% include "components/company_advantages.html" %}
+    {% include "components/cta.html" %}
+{% endblock %}

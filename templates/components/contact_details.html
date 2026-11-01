@@ -1,0 +1,19 @@
+{# Shared contact values keep the footer and contact page consistent. #}
+<address class="contact-details">
+    <p>{% if LANGUAGE_CODE == "fa" %}{{ company.address_fa }}{% else %}{{ company.address_en }}{% endif %}</p>
+    <p>{% if LANGUAGE_CODE == "fa" %}کدپستی: {{ company.postal_code_fa }}{% else %}Postal code: {{ company.postal_code }}{% endif %}</p>
+    <div class="contact-line">
+        <span class="contact-label">{% if LANGUAGE_CODE == "fa" %}تلفن{% else %}Telephone{% endif %}</span>
+        {% for phone in company.phones %}<a href="tel:{{ phone.href }}"
+                                            dir="ltr">{{ phone.label }}</a>{% endfor %}
+    </div>
+    <div class="contact-line">
+        <span class="contact-label">{% if LANGUAGE_CODE == "fa" %}موبایل{% else %}Mobile{% endif %}</span>
+        <a href="tel:{{ company.mobile.href }}" dir="ltr">{{ company.mobile.label }}</a>
+    </div>
+    <div class="contact-line">
+        <span class="contact-label">{% if LANGUAGE_CODE == "fa" %}ایمیل{% else %}Email{% endif %}</span>
+        {% for email in company.emails %}<a href="mailto:{{ email }}"
+                                            dir="ltr">{{ email }}</a>{% endfor %}
+    </div>
+</address>

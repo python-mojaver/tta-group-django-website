@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="globe" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></g>
+  </symbol>
+  <symbol id="thermometer" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14V5a3 3 0 0 0-6 0v9a5 5 0 1 0 6 0ZM5 8v10M15 4v15m-4-4 4 4 4-4"/></g>
+  </symbol>
+  <symbol id="trade" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/></g>
+  </symbol>
+  <symbol id="clock" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6M12 7v5l4 2"/></g>
+  </symbol>
+  <symbol id="factory" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l6-4v5l7-5v16ZM16 21h5V3h-3v18M6 15h1m4 0h1m-6 3h1m4 0h1"/></g>
+  </symbol>
+</svg>
