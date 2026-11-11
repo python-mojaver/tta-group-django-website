@@ -1,6 +1,6 @@
-# TTA Group
+# TTA Group | Django Company Website
 
-A bilingual B2B catalog for industrial materials, built with Django. Visitors can browse products, review grades and technical documents, and submit an inquiry. Staff manage catalog content and follow up on requests through Django admin.
+A bilingual company website built with Python and Django for TTA Group. It presents the company and its industrial products, provides technical documents, and lets visitors request a quote. Staff manage products and track incoming requests through Django admin.
 
 **Author:** Babak Mojaver
 
